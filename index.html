@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en" lang="arabic">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Montara Office — Find Your Dream Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #bdb434;
+      --gold-light: #191c24;
+      --dark: #181b17;
+      --dark2: #1a1a1a;
+      --dark3: #242424;
+      --cream: #f5f0e8;
+      --cream2: #ede7d8;
+      --text: #2a2a2a;
+      --muted: #888;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior:smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(14,14,14,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(195, 197, 60, 0.2);
+      transition: padding 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 600; letter-spacing: 0.05em;
+      color: var(--gold); text-decoration: none;
+    }
+    .nav-logo span { color: var(--white); font-weight: 300; font-style: italic; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75); text-decoration: none;
+      font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold); color: var(--dark);
+      border: none; padding: 0.6rem 1.6rem;
+      font-family: 'DM Sans', sans-serif; font-size: 0.8rem;
+      font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-light); }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      background: var(--dark);
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+      padding: 8rem 4rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: 
+        linear-gradient(135deg, rgba(161, 129, 40, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image: linear-gradient(var(--gold) 1px, transparent 1px),
+        linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-tag {
+      color: var(--gold); font-size: 0.75rem; letter-spacing: 0.25em;
+      text-transform: uppercase; margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-tag::before {
+      content: ''; display: block;
+      width: 40px; height: 1px; background: var(--gold);
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      font-weight: 300; line-height: 1.05;
+      color: var(--white); max-width: 700px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 1s ease forwards;
+    }
+    .hero-title em {
+      font-style: italic; color: var(--gold);
+    }
+    .hero-sub {
+      color: rgba(255,255,255,0.55); font-size: 1rem;
+      max-width: 420px; line-height: 1.7;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+    .hero-btns { display: flex; gap: 1rem; animation: fadeUp 1s 0.35s ease both; }
+    .btn-primary {
+      background: var(--gold); color: var(--dark);
+      padding: 0.9rem 2.2rem; border: none;
+      font-family: 'DM Sans', sans-serif; font-weight: 500;
+      font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; transition: background 0.2s, transform 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--white);
+      padding: 0.9rem 2.2rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; transition: border-color 0.2s, color 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-stats {
+      position: absolute; bottom: 3rem; right: 4rem;
+      display: flex; gap: 3rem;
+      animation: fadeUp 1s 0.5s ease both;
+    }
+    .stat-item { text-align: right; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 600; color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      color: rgba(255,255,255,0.4); font-size: 0.72rem;
+      letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.3rem;
+    }
+
+    /* ── SEARCH BAR ── */
+    .search-section {
+      background: var(--dark2);
+      padding: 2rem 4rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .search-bar {
+      display: flex; gap: 0; max-width: 900px; margin: 0 auto;
+      border: 1px solid rgba(201,168,76,0.3);
+    }
+    .search-bar select, .search-bar input {
+      background: var(--dark3); border: none; outline: none;
+      color: var(--white); font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; padding: 1rem 1.2rem;
+      flex: 1;
+    }
+    .search-bar select option { background: var(--dark3); }
+    .search-bar .divider {
+      width: 1px; background: rgba(201,168,76,0.2); flex-shrink: 0;
+    }
+    .search-bar button {
+      background: var(--gold); border: none;
+      padding: 1rem 2rem; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-weight: 500;
+      font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--dark); white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .search-bar button:hover { background: var(--gold-light); }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 4rem; }
+    .section-tag {
+      color: var(--gold); font-size: 0.72rem; letter-spacing: 0.25em;
+      text-transform: uppercase; margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .section-tag::before {
+      content: ''; display: block;
+      width: 30px; height: 1px; background: var(--gold);
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300; line-height: 1.15;
+      margin-bottom: 1rem; color: var(--dark);
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-sub {
+      color: var(--muted); font-size: 0.95rem; line-height: 1.7;
+      max-width: 500px; margin-bottom: 3rem;
+    }
+
+    /* ── LISTINGS ── */
+    #listings { background: var(--cream); }
+    .filter-bar {
+      display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+      padding: 0.5rem 1.2rem; border: 1px solid var(--cream2);
+      background: var(--white); cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: 0.8rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      transition: all 0.2s; color: var(--text);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--dark); color: var(--gold);
+      border-color: var(--dark);
+    }
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .property-card {
+      background: var(--white);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .property-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    }
+    .card-img {
+      height: 220px; position: relative; overflow: hidden;
+    }
+    .card-img-bg {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .property-card:hover .card-img-bg { transform: scale(1.05); }
+    .card-badge {
+      position: absolute; top: 1rem; left: 1rem;
+      background: var(--gold); color: var(--dark);
+      font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+    }
+    .card-price {
+      position: absolute; bottom: 1rem; right: 1rem;
+      background: var(--dark); color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 600;
+      padding: 0.3rem 0.8rem;
+    }
+    .card-body { padding: 1.5rem; }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 600;
+      margin-bottom: 0.3rem; color: var(--dark);
+    }
+    .card-address {
+      color: var(--muted); font-size: 0.82rem;
+      margin-bottom: 1rem;
+    }
+    .card-features {
+      display: flex; gap: 1.5rem;
+      border-top: 1px solid var(--cream2); padding-top: 1rem;
+    }
+    .feature {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; color: var(--text);
+    }
+    .feature-icon { font-size: 1rem; }
+
+    /* fake card images using CSS gradients */
+    .img-1 { background: linear-gradient(135deg, #8b9d77 0%, #6b7f61 40%, #4a5e42 100%); }
+    .img-2 { background: linear-gradient(135deg, #b8a99a 0%, #9c8878 40%, #7a6960 100%); }
+    .img-3 { background: linear-gradient(135deg, #7b9eb0 0%, #5a7f94 40%, #3d6178 100%); }
+    .img-4 { background: linear-gradient(135deg, #c4a882 0%, #a88c66 40%, #8c7050 100%); }
+    .img-5 { background: linear-gradient(135deg, #9ba5b4 0%, #7d8898 40%, #5f6b7c 100%); }
+    .img-6 { background: linear-gradient(135deg, #b4a0a0 0%, #987878 40%, #7c5c5c 100%); }
+    .img-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .house-icon { font-size: 3.5rem; opacity: 0.3; }
+
+    /* ── AGENTS ── */
+    #agents { background: var(--dark); }
+    #agents .section-title { color: var(--white); }
+    #agents .section-sub { color: rgba(255,255,255,0.45); }
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+    .agent-card {
+      background: var(--dark3);
+      border: 1px solid rgba(201,168,76,0.1);
+      padding: 2rem; text-align: center;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .agent-card:hover {
+      border-color: rgba(201,168,76,0.4);
+      transform: translateY(-4px);
+    }
+    .agent-avatar {
+      width: 90px; height: 90px; border-radius: 50%;
+      margin: 0 auto 1.2rem;
+      border: 2px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; color: var(--gold);
+    }
+    .av1 { background: linear-gradient(135deg, #3a3020, #2a2015); }
+    .av2 { background: linear-gradient(135deg, #1e2a30, #121c22); }
+    .av3 { background: linear-gradient(135deg, #2a2030, #1c1422); }
+    .av4 { background: linear-gradient(135deg, #202a20, #141c14); }
+    .agent-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-weight: 600;
+      color: var(--white); margin-bottom: 0.3rem;
+    }
+    .agent-role {
+      color: var(--gold); font-size: 0.75rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .agent-info {
+      color: rgba(255,255,255,0.4); font-size: 0.82rem;
+      line-height: 1.6; margin-bottom: 1.2rem;
+    }
+    .agent-contact {
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .agent-contact a {
+      color: rgba(255,255,255,0.5); font-size: 0.8rem;
+      text-decoration: none; transition: color 0.2s;
+    }
+    .agent-contact a:hover { color: var(--gold); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--cream2); }
+    .contact-layout {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem;
+      align-items: start;
+    }
+    .contact-info { }
+    .contact-detail {
+      display: flex; flex-direction: column; gap: 1.8rem; margin-top: 2rem;
+    }
+    .detail-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .detail-icon {
+      width: 40px; height: 40px; background: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0; color: var(--gold);
+    }
+    .detail-label {
+      font-size: 0.72rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem;
+    }
+    .detail-value { font-size: 0.95rem; color: var(--text); }
+
+    /* ── FORM ── */
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-size: 0.72rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--white); border: 1px solid var(--cream2);
+      padding: 0.85rem 1rem; font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; color: var(--text); outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      background: var(--dark); color: var(--gold);
+      border: none; padding: 1rem 2.5rem;
+      font-family: 'DM Sans', sans-serif; font-weight: 500;
+      font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
+      cursor: pointer; transition: background 0.2s; align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+    .form-submit:hover { background: var(--dark3); }
+    .form-success {
+      display: none; background: rgba(201,168,76,0.1);
+      border: 1px solid var(--gold); padding: 1rem 1.5rem;
+      color: var(--text); font-size: 0.9rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark); padding: 3rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid rgba(201,168,76,0.15);
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; color: var(--gold);
+    }
+    .footer-logo span { color: rgba(255,255,255,0.5); font-style: italic; }
+    .footer-copy {
+      color: rgba(255,255,255,0.3); font-size: 0.8rem;
+    }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      color: rgba(255,255,255,0.4); text-decoration: none;
+      font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      #home { padding: 7rem 1.5rem 4rem; }
+      .hero-stats { position: static; margin-top: 3rem; justify-content: flex-start; flex-wrap: wrap; }
+      .search-section { padding: 1.5rem; }
+      .search-bar { flex-direction: column; }
+      .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-logo">Montara <span>Office</span></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#listings">Listings</a></li>
+      <li><a href="#agents">Agents</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-tag">Luxury Real Estate</div>
+    <h1 class="hero-title">
+      Find your<br><em>perfect</em><br>home
+    </h1>
+    <p class="hero-sub">We connect discerning buyers and sellers with exceptional properties. Experience real estate done differently.</p>
+    <div class="hero-btns">
+      <a href="#listings" class="btn-primary">View Listings</a>
+      <a href="#contact" class="btn-outline">Talk to an Agent</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">100+</div>
+        <div class="stat-label">Properties Sold</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH -->
+  <div class="search-section">
+    <div class="search-bar">
+      <select id="s-type">
+        <option value="">Property Type</option>
+        <option>House</option>
+        <option>Apartment</option>
+        <option>Villa</option>
+        <option>Commercial</option>
+      </select>
+      <div class="divider"></div>
+      <select id="s-status">
+        <option value="">Status</option>
+        <option>For Sale</option>
+        <option>For Rent</option>
+        <option>New Build</option>
+      </select>
+      <div class="divider"></div>
+      <select id="s-price">
+        <option value="">Price Range</option>
+        <option>Under $300K</option>
+        <option>$300K – $600K</option>
+        <option>$600K – $1M</option>
+        <option>$1M+</option>
+      </select>
+      <div class="divider"></div>
+      <input type="text" placeholder="Location or keyword…" id="s-location"/>
+      <button onclick="runSearch()">Search</button>
+    </div>
+  </div>
+
+  <!-- LISTINGS -->
+  <section id="listings">
+    <div class="section-tag">Available Properties</div>
+    <h2 class="section-title">Featured <em>Listings</em></h2>
+    <p class="section-sub">Handpicked properties that combine exceptional design with ideal locations.</p>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCards(this,'all')">All</button>
+      <button class="filter-btn" onclick="filterCards(this,'sale')">For Sale</button>
+      <button class="filter-btn" onclick="filterCards(this,'rent')">For Rent</button>
+      <button class="filter-btn" onclick="filterCards(this,'new')">New Build</button>
+    </div>
+
+    <div class="listings-grid" id="listings-grid">
+
+      <div class="property-card fade-in" data-cat="sale">
+        <div class="card-img">
+          <div class="card-img-bg img-1"><div class="img-inner"><span class="house-icon">🏡</span></div></div>
+          <span class="card-badge">For Sale</span>
+          <span class="card-price">$485,000</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Elmwood Manor</div>
+          <div class="card-address">📍 142 Elmwood Drive, Riverside</div>
+          <div class="card-features">
+            <div class="feature"><span class="feature-icon">🛏</span> 4 Beds</div>
+            <div class="feature"><span class="feature-icon">🚿</span> 3 Baths</div>
+            <div class="feature"><span class="feature-icon">📐</span> 2,400 sqft</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="property-card fade-in" data-cat="rent">
+        <div class="card-img">
+          <div class="card-img-bg img-2"><div class="img-inner"><span class="house-icon">🏢</span></div></div>
+          <span class="card-badge">For Rent</span>
+          <span class="card-price">$3,200/mo</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Skyline Residences</div>
+          <div class="card-address">📍 88 Skyline Blvd, Midtown</div>
+          <div class="card-features">
+            <div class="feature"><span class="feature-icon">🛏</span> 2 Beds</div>
+            <div class="feature"><span class="feature-icon">🚿</span> 2 Baths</div>
+            <div class="feature"><span class="feature-icon">📐</span> 1,100 sqft</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="property-card fade-in" data-cat="new">
+        <div class="card-img">
+          <div class="card-img-bg img-3"><div class="img-inner"><span class="house-icon">🏠</span></div></div>
+          <span class="card-badge">New Build</span>
+          <span class="card-price">$720,000</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Lakeview Heights</div>
+          <div class="card-address">📍 17 Lakeview Terrace, Northgate</div>
+          <div class="card-features">
+            <div class="feature"><span class="feature-icon">🛏</span> 5 Beds</div>
+            <div class="feature"><span class="feature-icon">🚿</span> 4 Baths</div>
+            <div class="feature"><span class="feature-icon">📐</span> 3,100 sqft</div>
+          </div>
+        </div>
+      </div>
+
+      <!--<div class="property-card fade-in" data-cat="sale">
+        <div class="card-img">
+          <div class="card-img-bg img-4"><div class="img-inner"><span class="house-icon">🏡</span></div></div>
+          <span class="card-badge">For Sale</span>
+          <span class="card-price">$295,000</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Maple Creek Cottage</div>
+          <div class="card-address">📍 29 Maple Creek Lane, Westfield</div>
+          <div class="card-features">
+            <div class="feature"><span class="feature-icon">🛏</span> 3 Beds</div>
+            <div class="feature"><span class="feature-icon">🚿</span> 2 Baths</div>
+            <div class="feature"><span class="feature-icon">📐</span> 1,650 sqft</div>
+          </div>
+        </div>
+      </div>-->
+
+      <!--<div class="property-card fade-in" data-cat="rent">
+        <div class="card-img">
+          <div class="card-img-bg img-5"><div class="img-inner"><span class="house-icon">🏢</span></div></div>
+          <span class="card-badge">For Rent</span>
+          <span class="card-price">$1,850/mo</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Garden Studio Flats</div>
+          <div class="card-address">📍 55 Garden Court, Eastside</div>
+          <div class="card-features">
+            <div class="feature"><span class="feature-icon">🛏</span> 1 Bed</div>
+            <div class="feature"><span class="feature-icon">🚿</span> 1 Bath</div>
+            <div class="feature"><span class="feature-icon">📐</span> 620 sqft</div>
+          </div>
+        </div>
+      </div>-->
+
+      <!--<div class="property-card fade-in" data-cat="new">
+        <div class="card-img">
+          <div class="card-img-bg img-6"><div class="img-inner"><span class="house-icon">🏠</span></div></div>
+          <span class="card-badge">New Build</span>
+          <span class="card-price">$1,150,000</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">The Meridian Villa</div>
+          <div class="card-address">📍 3 Meridian Close, Highland Park</div>
+          <div class="card-features">
+            <div class="feature"><span class="feature-icon">🛏</span> 6 Beds</div>
+            <div class="feature"><span class="feature-icon">🚿</span> 5 Baths</div>
+            <div class="feature"><span class="feature-icon">📐</span> 4,800 sqft</div>
+          </div>
+        </div>
+      </div>-->
+
+    </div>
+  </section>
+
+  <!-- AGENTS -->
+  <section id="agents">
+    <div class="section-tag">Our Team</div>
+    <h2 class="section-title">Meet our <em>Agents</em></h2>
+    <p class="section-sub">Experienced professionals dedicated to finding you the perfect property.</p>
+    <div class="agents-grid">
+
+      <div class="agent-card fade-in">
+        <div class="agent-avatar av1">S</div>
+        <div class="agent-name">Omran Khoursheed</div>
+        <div class="agent-role">Senior Agent</div>
+        <!--<div class="agent-info">10+ years in luxury residential. Specialist in waterfront and estate properties.</div>-->
+        <div class="agent-contact">
+          <a href="tel:+15551234567">📞 (750) 3653845</a>
+          <a href="mailto:sarah@prestigerealty.com">✉ omran@gmail.com</a>
+        </div>
+      </div>
+
+     <!-- <div class="agent-card fade-in">
+        <div class="agent-avatar av2">J</div>
+        <div class="agent-name">James Nakamura</div>
+        <div class="agent-role">Commercial Specialist</div>
+        <div class="agent-info">Expert in commercial and investment properties with a focus on ROI-driven decisions.</div>
+        <div class="agent-contact">
+          <a href="tel:+15552345678">📞 (555) 234-5678</a>
+          <a href="mailto:james@prestigerealty.com">✉ james@prestigerealty.com</a>
+        </div>
+      </div>
+
+      <div class="agent-card fade-in">
+        <div class="agent-avatar av3">A</div>
+        <div class="agent-name">Amara Osei</div>
+        <div class="agent-role">Buyer's Agent</div>
+        <div class="agent-info">Passionate about helping first-time buyers navigate the market with confidence.</div>
+        <div class="agent-contact">
+          <a href="tel:+15553456789">📞 (555) 345-6789</a>
+          <a href="mailto:amara@prestigerealty.com">✉ amara@prestigerealty.com</a>
+        </div>
+      </div>
+
+      <div class="agent-card fade-in">
+        <div class="agent-avatar av4">R</div>
+        <div class="agent-name">Robert Eaves</div>
+        <div class="agent-role">Rental Specialist</div>
+        <div class="agent-info">Dedicated to matching tenants with ideal rental properties across all price ranges.</div>
+        <div class="agent-contact">
+          <a href="tel:+15554567890">📞 (555) 456-7890</a>
+          <a href="mailto:robert@prestigerealty.com">✉ robert@prestigerealty.com</a>
+        </div>
+      </div>-->
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-layout">
+      <div class="contact-info">
+        <div class="section-tag">Get In Touch</div>
+        <h2 class="section-title">Let's find your <em>dream home</em></h2>
+        <p class="section-sub">Our team is ready to guide you every step of the way. Reach out and we'll respond within 24 hours.</p>
+        <div class="contact-detail">
+          <div class="detail-item">
+            <div class="detail-icon">📍</div>
+            <div>
+              <div class="detail-label">Office Address</div>
+              <div class="detail-value">Yaseen mosque street<br>Duhok , Zakho 42002</div>
+            </div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">📞</div>
+            <div>
+              <div class="detail-label">Phone</div>
+              <div class="detail-value">(750) 5434324</div>
+            </div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">✉</div>
+            <div>
+              <div class="detail-label">Email</div>
+              <div class="detail-value">omran@gmail.com</div>
+            </div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">🕐</div>
+            <div>
+              <div class="detail-label">Office Hours</div>
+              <div class="detail-value">Mon–Fri: 9am – 6pm<br>Sat: 10am – 4pm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-form" id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="John" id="f-fname"/>
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Smith" id="f-lname"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="john@example.com" id="f-email"/>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="(750) 000-0000" id="f-phone"/>
+          </div>
+          <div class="form-group">
+            <label>I'm interested in</label>
+            <select id="f-interest">
+              <option value="">Select an option</option>
+              <option>Buying a Property</option>
+              <option>Renting a Property</option>
+              <option>Selling My Property</option>         
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us about what you're looking for…" id="f-message"></textarea>
+          </div>
+          <button class="form-submit" onclick="submitForm()">Send Message →</button>
+          <div class="form-success" id="form-success">
+            ✅ Thank you! We've received your message and will be in touch within 24 hours.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Montara <span>Office</span></div>
+    <div class="footer-copy">© 2026 Montara Office. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#listings">Listings</a>
+      <a href="#agents">Agents</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // ── Scroll-triggered fade-in ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ── Filter listings ──
+    function filterCards(btn, cat) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.property-card').forEach(card => {
+        const show = cat === 'all' || card.dataset.cat === cat;
+        card.style.display = show ? '' : 'none';
+      });
+    }
+
+    // ── Search ──
+    function runSearch() {
+      const type = document.getElementById('s-type').value;
+      const status = document.getElementById('s-status').value;
+      const loc = document.getElementById('s-location').value.toLowerCase();
+      document.getElementById('listings').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        document.querySelectorAll('.property-card').forEach(card => {
+          const addr = card.querySelector('.card-address').textContent.toLowerCase();
+          const badge = card.querySelector('.card-badge').textContent;
+          const matchLoc = !loc || addr.includes(loc);
+          const matchStatus = !status || badge.toLowerCase().includes(status.toLowerCase().split(' ')[1] || status.toLowerCase());
+          card.style.display = matchLoc && matchStatus ? '' : 'none';
+        });
+      }, 600);
+    }
+
+    // ── Contact form ──
+    function submitForm() {
+      const fname = document.getElementById('f-fname').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      if (!fname || !email) {
+        alert('Please fill in your name and email address.');
+        return;
+      }
+      document.querySelector('.form-submit').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+      ['f-fname','f-lname','f-email','f-phone','f-interest','f-message']
+        .forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+    }
+  </script>
+</body>
+</html>
